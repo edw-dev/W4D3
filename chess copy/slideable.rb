@@ -1,5 +1,7 @@
+
+
+
 require_relative "piece"
-require "byebug"
 module Slideable
     def moves
         moves = []
@@ -24,8 +26,7 @@ module Slideable
     end
 
     private
-
-     def grow_unblocked_moves(direction)
+    def grow_unblocked_moves(direction)
         row, col = self.pos
         direction_moves = []
         direction.each do |dir|
@@ -38,18 +39,17 @@ module Slideable
                     direction << [i + idx, j + jdx] 
                     i += idx
                     j += jdx
-                elsif self.board[i+idx, j+jdx].color == self.color
+                elsif self.board[i+idx, j+jdx].color != self.color
                     direction << [i + idx, j + jdx] 
                     break
                 else
                     break
                 end   
             end
-            direction_moves += direction if !direction.empty?
+            direction_moves << direction if !direction.empty?
         end
         direction_moves
     end
-
 
     HORIZONTAL_DIRS = [
         [-1, 0],
@@ -57,8 +57,13 @@ module Slideable
         [1, 0],
         [0, -1]
     ]
+    DIAGONAL_DIRS = [
+        [-1, -1],
+        [-1, 1],
+        [1, 1],
+        [1, -1]
+    ]
 
+    
 end
-
-
 

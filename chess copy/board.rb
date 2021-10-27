@@ -3,7 +3,8 @@
 
 require_relative "piece"
 require_relative "null_piece" # REMOVE LATER 
-require_relative "rook" # REMOVE LATER 
+require_relative "knight" # REMOVE LATER 
+require_relative "rook"
 require_relative "slideable"
 require "byebug"
 class Board
@@ -17,6 +18,7 @@ class Board
         #         end
         #     end
         # end
+        add_piece(Knight.new(:black, self, [1,0]), [1,0])
         add_piece(Rook.new(:black, self, [2,0]), [2,0])
     end
 
@@ -59,5 +61,5 @@ end
 board = Board.new
 p board
 #p board.grid.each_with_index {|row, i| row.each_with_index{|ele, j| p ele if i == 2 && j ==0}}
-p board[2, 0].moves
+p board[1, 0].moves
 # p board
