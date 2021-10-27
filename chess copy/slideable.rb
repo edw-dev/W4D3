@@ -1,8 +1,9 @@
 require_relative "piece"
+require "byebug"
 module Slideable
     def moves
         moves = []
-        case self.move_dirs
+        case move_dirs
         when "horizontal"
             moves += grow_unblocked_moves(horizontal_dirs)
         when "diagonal"
@@ -18,7 +19,13 @@ module Slideable
         HORIZONTAL_DIRS
     end
 
-    def grow_unblocked_moves(direction)
+    def diagonal_dirs
+        DIAGONAL_DIRS
+    end
+
+    private
+
+     def grow_unblocked_moves(direction)
         row, col = self.pos
         direction_moves = []
         direction.each do |dir|
@@ -26,7 +33,7 @@ module Slideable
             j = col
             idx, jdx = dir
             direction = []
-            while self.board.valid_pos([i+idx, j+jdx])
+            while self.board.valid_pos?([i+idx, j+jdx])
                 if self.board[i+idx, j+jdx].empty?     
                     direction << [i + idx, j + jdx] 
                     i += idx
@@ -38,16 +45,12 @@ module Slideable
                     break
                 end   
             end
-            direction_moves << direction
+            direction_moves += direction if !direction.empty?
         end
         direction_moves
     end
 
-    def diagonal_dirs
-        DIAGONAL_DIRS
-    end
 
-    private
     HORIZONTAL_DIRS = [
         [-1, 0],
         [0, 1],
@@ -55,6 +58,7 @@ module Slideable
         [0, -1]
     ]
 
-    
 end
+
+
 

@@ -13,7 +13,7 @@ class Piece
     end
 
     def empty?
-        self.symbol == :N ? true : false
+        self.symbol == " " ? true : false
     end
 
 end

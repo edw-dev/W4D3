@@ -59,4 +59,5 @@ end
 board = Board.new
 p board
 #p board.grid.each_with_index {|row, i| row.each_with_index{|ele, j| p ele if i == 2 && j ==0}}
-#p board.grid[2][0].moves
+p board[2, 0].moves
+# p board
