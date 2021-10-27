@@ -1,5 +1,5 @@
 
-2. make bishop, queen
-3. DIAGONAL_DIRS
-4. test bishop#moves, queen#moves
-5. make stepable module
+- make pawn
+- board populate
+- refactor board#move_piece
+
