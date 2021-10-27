@@ -27,6 +27,16 @@ class Board
         @grid[row][col] = val
     end
 
+    def valid_pos?(pos)
+        row, col = pos
+        if row > 7 || row < 0 
+            return false
+        elsif col > 7 || col < 0
+            return false
+        end
+    true
+    end
+
     def add_piece(piece, pos)
         row, col = pos
         @grid[row][col] = piece
