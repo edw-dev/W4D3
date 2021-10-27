@@ -18,9 +18,9 @@ class Board
         #         end
         #     end
         # end
-        add_piece(Pawn.new(:white, self, [1,1]), [1,1])
-        add_piece(Rook.new(:black, self, [0,0]), [0,0])
-        add_piece(Rook.new(:black, self, [0,2]), [0,2])
+        add_piece(Pawn.new(:white, self, [6,6]), [6,6])
+        add_piece(Rook.new(:black, self, [5,6]), [5,6])
+        add_piece(Rook.new(:black, self, [4,6]), [4,6])
     end
 
     def [](pos1, pos2)
@@ -62,5 +62,5 @@ end
 board = Board.new
 p board
 #p board.grid.each_with_index {|row, i| row.each_with_index{|ele, j| p ele if i == 2 && j ==0}}
-p board[1, 1].side_attacks
+p board[6, 6].moves
 # p board

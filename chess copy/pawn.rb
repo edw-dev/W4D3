@@ -11,21 +11,21 @@ class Pawn < Piece
         end
         
         def moves
-
-            [
-                [-1, 0],
-                [0, 1],
-                [1, 0],
-                [0, -1],
-                [-1, -1],
-                [-1, 1],
-                [1, 1],
-                [1, -1]
-            ]
+            row, col = @pos
+            row += forward_dir
+            moves = []
+            moves += side_attacks
+            if board[row, col].empty? 
+                moves << [row,col] if board[row, col].empty? 
+                moves << [row + forward_dir,col] if board[row +forward_dir, col].empty? && at_start_row?
+            end
+            moves
         end
         # private
         def at_start_row?
-
+            return true if @color == :black && pos[0] == 1
+            return true if @color == :white && pos[0] == 6
+            false
         end
 
         def forward_dir
@@ -51,3 +51,13 @@ class Pawn < Piece
         end
 
     end
+    #  [
+    #             [-1, 0],
+    #             [0, 1],
+    #             [1, 0],
+    #             [0, -1],
+    #             [-1, -1],
+    #             [-1, 1],
+    #             [1, 1],
+    #             [1, -1]
+    #         ]
