@@ -26,10 +26,17 @@ module Slideable
             j = col
             idx, jdx = dir
             direction = []
-            while valid_pos([i+idx, j+jdx])
-                direction << [i + idx, j + jdx]
-                i += idx
-                j += jdx   
+            while self.board.valid_pos([i+idx, j+jdx])
+                if self.board[i+idx, j+jdx].empty?     
+                    direction << [i + idx, j + jdx] 
+                    i += idx
+                    j += jdx
+                elsif self.board[i+idx, j+jdx].color == self.color
+                    direction << [i + idx, j + jdx] 
+                    break
+                else
+                    break
+                end   
             end
             direction_moves << direction
         end
@@ -51,14 +58,3 @@ module Slideable
     
 end
 
-class Rook < Piece
-include Slideable
-    def initialize(color, board, pos)
-        super
-    end
-
-    private
-    def move_dirs
-        "horizontal"
-    end
-end

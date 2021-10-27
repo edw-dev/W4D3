@@ -1,18 +1,23 @@
+
+
+
 require_relative "piece"
+require_relative "null_piece" # REMOVE LATER 
+require_relative "rook" # REMOVE LATER 
 require_relative "slideable"
 require "byebug"
 class Board
     attr_reader :grid
     def initialize()
-        @grid = Array.new(8){Array.new(8, nil)}
+        @grid = Array.new(8){Array.new(8,NullPiece.instance)}
         # @grid.each_with_index do |row, idx1|
         #     if idx1 == 0 || idx1 == 1 || idx1 == 6 || idx1 == 7
         #         row.each_with_index do |ele, idx2|
-        #             @grid[idx1][idx2] = Piece.new(:white, self, [idx1, idx2])
+        #             @grid[idx1][idx2] = NullPiece.instance #Piece.new(:white, self, [idx1, idx2])
         #         end
         #     end
         # end
-    add_piece(Rook.new(:black, self, [2,0]), [2,0])
+        add_piece(Rook.new(:black, self, [2,0]), [2,0])
     end
 
     def [](pos1, pos2)
@@ -52,5 +57,6 @@ class Board
 end
 
 board = Board.new
-p board.grid.each_with_index {|row, i| row.each_with_index{|ele, j| p ele if i == 2 && j ==0}}
-p board.grid[2][0].moves
+p board
+#p board.grid.each_with_index {|row, i| row.each_with_index{|ele, j| p ele if i == 2 && j ==0}}
+#p board.grid[2][0].moves
