@@ -1,4 +1,7 @@
 class CoffeeError < StandardError; end
+class YearError < StandardError; end
+class StringError < StandardError; end
+
 # PHASE 2
 def convert_to_int(str)
   Integer(str)
@@ -33,8 +36,17 @@ end
 class BestFriend
   def initialize(name, yrs_known, fav_pastime)
     @name = name
-    @yrs_known = yrs_known
+    if @name.length == 0
+      raise StringError.new("no name error")
+    end
+    @yrs_known = yrs_known 
+    if @yrs_known < 5 
+      raise YearError.new("not long enough")
+    end
     @fav_pastime = fav_pastime
+    if @fav_pastime.length == 0
+      raise StringError.new("no pastime error")
+    end
   end
 
   def talk_about_friendship
