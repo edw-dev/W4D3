@@ -5,22 +5,37 @@ require_relative "piece"
 require_relative "null_piece" # REMOVE LATER 
 require_relative "pawn" # REMOVE LATER 
 require_relative "rook"
+require_relative "bishop"
+require_relative "king"
+require_relative "knight"
+require_relative "queen"
 require_relative "slideable"
 require "byebug"
 class Board
     attr_reader :grid
     def initialize()
         @grid = Array.new(8){Array.new(8,NullPiece.instance)}
-        # @grid.each_with_index do |row, idx1|
-        #     if idx1 == 0 || idx1 == 1 || idx1 == 6 || idx1 == 7
-        #         row.each_with_index do |ele, idx2|
-        #             @grid[idx1][idx2] = NullPiece.instance #Piece.new(:white, self, [idx1, idx2])
-        #         end
-        #     end
-        # end
-        add_piece(Pawn.new(:white, self, [6,6]), [6,6])
-        add_piece(Rook.new(:black, self, [5,6]), [5,6])
-        add_piece(Rook.new(:black, self, [4,6]), [4,6])
+        row_comp(:black, 0)
+        row_pawn(:black, 1)
+        row_comp(:white, 7)
+        row_pawn(:white, 6)
+    end
+
+    def row_comp(color, row)
+        add_piece(Rook.new(color, self, [row, 0]), [row, 0])
+        add_piece(Rook.new(color, self, [row, 7]), [row, 7])
+        add_piece(Knight.new(color, self, [row, 1]), [row, 1])
+        add_piece(Knight.new(color, self, [row, 6]), [row, 6])
+        add_piece(Bishop.new(color, self, [row, 2]), [row, 2])
+        add_piece(Bishop.new(color, self, [row, 5]), [row, 5])
+        color == :black ? col = 3 : col = 4
+        add_piece(King.new(color, self, [row, col]), [row, col])
+        color == :black ? col = 4 : col = 3
+        add_piece(Queen.new(color, self, [row, col]), [row, col])
+    end
+
+    def row_pawn(color, row)
+        (0..7).each { |col| add_piece(Pawn.new(color, self, [row, col]), [row, col])}
     end
 
     def [](pos1, pos2)
@@ -51,16 +66,21 @@ class Board
     end
 
     def move_piece(start_pos, end_pos)
-        raise "no piece at start position" if self[start_pos].nil?
+        # raise "no piece at start position" if self[start_pos].nil?
         #fix conitional logic
-        raise "piece cannot reach end position" if !self[end_pos].nil?
-        self[end_pos] = self[start_pos]
-        self[start_pos] = nil
+        # raise "piece cannot reach end position" if !self[end_pos].nil?
+        if self[*start_pos].moves.include?(end_pos)
+            self[*end_pos], self[*start_pos] = self[*start_pos], self[*end_pos]
+        # else reprompt
+        end
     end
 end
 
 board = Board.new
 p board
 #p board.grid.each_with_index {|row, i| row.each_with_index{|ele, j| p ele if i == 2 && j ==0}}
-p board[6, 6].moves
+# p board[6, 6].moves
 # p board
+
+board.move_piece([0, 5], [3, 6])
+p board

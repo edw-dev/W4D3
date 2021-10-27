@@ -21,7 +21,8 @@ class Pawn < Piece
             end
             moves
         end
-        # private
+        
+        private
         def at_start_row?
             return true if @color == :black && pos[0] == 1
             return true if @color == :white && pos[0] == 6
